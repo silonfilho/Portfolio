@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Portfólio - Silon Filho</title>
+    
+    <!-- Fontes Modernas (Geist & Plus Jakarta Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root[data-theme="dark"] {
+            --bg-color: #111111;
+            --text-color: #ffffff;
+            --text-muted: #aaaaaa;
+            --menu-bg: rgba(17, 17, 17, 0.9);
+            --card-bg: #181818;
+            --card-border: #2a2a2a;
+            --modal-bg: rgba(18, 18, 18, 0.75);
+            --modal-border: rgba(255, 255, 255, 0.15);
+            --modal-media-bg: rgba(0, 0, 0, 0.4);
+            --icon-btn-bg: rgba(255, 255, 255, 0.08);
+            --icon-btn-border: rgba(255, 255, 255, 0.2);
+            --icon-btn-hover: rgba(255, 255, 255, 0.2);
+            --glass-badge-bg: rgba(255, 255, 255, 0.06);
+            --glass-badge-border: rgba(255, 255, 255, 0.14);
+            --glass-badge-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        :root[data-theme="light"] {
+            --bg-color: #f4f4f4;
+            --text-color: #111111;
+            --text-muted: #555555;
+            --menu-bg: rgba(244, 244, 244, 0.9);
+            --card-bg: #ffffff;
+            --card-border: #dddddd;
+            --modal-bg: rgba(255, 255, 255, 0.85);
+            --modal-border: rgba(0, 0, 0, 0.15);
+            --modal-media-bg: rgba(200, 200, 200, 0.3);
+            --icon-btn-bg: rgba(0, 0, 0, 0.05);
+            --icon-btn-border: rgba(0, 0, 0, 0.15);
+            --icon-btn-hover: rgba(0, 0, 0, 0.15);
+            --glass-badge-bg: rgba(255, 255, 255, 0.65);
+            --glass-badge-border: rgba(0, 0, 0, 0.1);
+            --glass-badge-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body, html {
+            font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .top-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--menu-bg);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+        }
+
+        .menu-brand {
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-color);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .menu-links {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .menu-btn {
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .menu-btn:hover {
+            color: var(--text-color);
+        }
+
+        .icon-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 10px;
+        }
+
+        /* Botões Redondos Ajustados (Menores) */
+        .circle-icon-btn {
+            background: var(--icon-btn-bg);
+            border: 1px solid var(--icon-btn-border);
+            color: var(--text-color);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .circle-icon-btn:hover {
+            background: var(--icon-btn-hover);
+            transform: scale(1.05);
+        }
+
+        .circle-icon-btn svg {
+            width: 15px;
+            height: 15px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 9999;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: var(--modal-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--modal-border);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 900px;
+            height: 80vh;
+            max-height: 550px;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+        .modal-media {
+            flex: 1.2;
+            background: var(--modal-media-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid var(--modal-border);
+            overflow: hidden;
+            position: relative;
+        }
+        .modal-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            aspect-ratio: 4 / 5;
+        }
+        .modal-info {
+            flex: 1;
+            padding: 40px 30px 30px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: transparent;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--icon-btn-bg);
+            border: 1px solid var(--icon-btn-border);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            color: var(--text-color);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.2s;
+        }
+        .modal-close:hover {
+            opacity: 0.7;
+        }
+
+        .cover-section {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            background-image: url('https://i.pinimg.com/1200x/c6/0a/48/c60a488377c1f13627d1a1c0493572bf.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .cover-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 20px;
+        }
+
+        .cover-title {
+            font-family: 'Plus Jakarta Sans', 'Geist', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            line-height: 1;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+            margin-bottom: 20px;
+        }
+
+        .cover-subtitle {
+            font-size: 1.1rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #cccccc;
+            margin-bottom: 30px;
+        }
+
+        .cover-author {
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        .cover-author span {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .btn-action {
+            display: inline-block;
+            padding: 12px 30px;
+            border: 2px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-action:hover {
+            background-color: #fff;
+            color: #111;
+        }
+
+        .section-container {
+            padding: 100px 10% 80px 10%;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .section-container h2 {
+            font-family: 'Plus Jakarta Sans', 'Geist', sans-serif;
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .section-desc {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .activity-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 0;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .activity-img-container {
+            background: var(--card-border);
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .activity-content {
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .activity-content h3 {
+            font-family: 'Plus Jakarta Sans', 'Geist', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0;
+            letter-spacing: 0.3px;
+        }
+
+        /* Etiqueta Glassmorphism */
+        .skill-badge {
+            background: var(--glass-badge-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-badge-border);
+            box-shadow: var(--glass-badge-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            padding: 4px 11px;
+            border-radius: 6px;
+            font-family: 'Geist', sans-serif;
+            font-size: 0.74rem;
+            font-weight: 500;
+            color: var(--text-color);
+            letter-spacing: 0.8px;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .skill-badge:hover {
+            transform: translateY(-1px);
+            border-color: var(--icon-btn-border);
+        }
+
+        .skill-badge .dot {
+            opacity: 0.45;
+            font-size: 0.7rem;
+        }
+
+        .activity-block {
+            margin-bottom: 15px;
+        }
+
+        .activity-block h4 {
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .activity-block p {
+            font-size: 0.98rem;
+            line-height: 1.65;
+            color: var(--text-muted);
+        }
+
+        /* Estilo do Carrossel de Conclusão (Proporção 16:10, Estilo Instagram) */
+        .conclusion-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .instagram-carousel {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .carousel-track-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.4s ease-in-out;
+            width: 400%; /* CORRIGIDO: 400% para suportar os 4 slides lado a lado */
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 25%; /* CORRIGIDO: 25% para cada um dos 4 slides ocupar exatamente 1 tela */
+            height: 100%;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .carousel-btn.prev {
+            left: 12px;
+        }
+
+        .carousel-btn.next {
+            right: 12px;
+        }
+
+        .carousel-pagination {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 4px 8px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        .pagination-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .pagination-dot.active {
+            background: #ffffff;
+            transform: scale(1.2);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            background: var(--bg-color);
+            border-top: 1px solid var(--card-border);
+        }
+
+        @media (max-width: 950px) {
+            .activity-card, .conclusion-grid {
+                grid-template-columns: 1fr;
+            }
+            .conclusion-grid {
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-menu">
+        <a href="#inicio" class="menu-brand">Início</a>
+        <div class="menu-links">
+            <a href="#objetivos" class="menu-btn">Objetivos</a>
+            <a href="#linguagens" class="menu-btn">Linguagens</a>
+            <a href="#humanas" class="menu-btn">Humanas</a>
+            <a href="#natureza" class="menu-btn">Natureza</a>
+            <a href="#matematica" class="menu-btn">Matemática</a>
+            <a href="#referencias" class="menu-btn">Referências</a>
+            <a href="#conclusao" class="menu-btn">Conclusão</a>
+            
+            <div class="icon-actions">
+                <button class="circle-icon-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Alternar Tema">
+                    <svg id="theme-icon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+
+                <button class="circle-icon-btn" id="fullscreen-btn" onclick="toggleFullscreen()" title="Tela Cheia">
+                    <svg id="fullscreen-icon" viewBox="0 0 24 24">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header id="inicio" class="cover-section">
+        <div class="cover-overlay"></div>
+        <div class="cover-content">
+            <h1 class="cover-title">PORTFÓLIO<br></h1>
+            <p class="cover-subtitle">Silon Rodrigues da Silva Filho</p>
+            <div class="cover-author">
+                <p>SESI Goiana &bull; <span>IV BIMESTRE</span></p>
+            </div>
+            <a href="#objetivos" class="btn-action">Explorar Portfólio</a>
+        </div>
+    </header>
+
+    <section id="objetivos" class="section-container">
+        <h2>Objetivos</h2>
+        <p class="section-desc">Documentar e sintetizar os aprendizados do ciclo escolar no SESI Goiana, utilizando esta base multidisciplinar como ponto de partida para o ingresso no ensino superior e no desenvolvimento de projetos profissionais nas áreas de tecnologia e inovação.</p>
+    </section>
+
+    <section id="divisor-tematico" class="section-container" style="padding: 30px 20px;">
+        <div style="max-width: 1000px; margin: 0 auto; border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); padding: 20px 0;">
+            <div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 15px; font-size: 0.85rem; letter-spacing: 0.5px; color: var(--text-muted);">
+                <div><strong style="color: var(--text-color); margin-right: 4px;">01.</strong> Linguagens</div>
+                <div><strong style="color: var(--text-color); margin-right: 4px;">02.</strong> Ciências Humanas</div>
+                <div><strong style="color: var(--text-color); margin-right: 4px;">03.</strong> Ciências da Natureza</div>
+                <div><strong style="color: var(--text-color); margin-right: 4px;">04.</strong> Matemática</div>
+                <div><strong style="color: var(--text-color); margin-right: 4px;">05.</strong> Referências</div>
+                <div><strong style="color: var(--text-color); margin-right: 4px;">06.</strong> Conclusão</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="linguagens" class="section-container">
+        <h2>Linguagens e suas Tecnologias</h2>
+        <p class="section-desc">Literatura, filosofia e reflexões sobre a existência</p>
+        
+        <div class="activity-card">
+            <div class="activity-img-container">
+                <img src="albertcamus.jpg" style="cursor: pointer;" onclick="abrirModalMidia(this)" data-titulo="O Estrangeiro (H22, C5)" data-area="Linguagens e suas Tecnologias" data-desc="A partir da leitura de O Estrangeiro, de Albert Camus, examinei a construção do protagonista Meursault e sua relação com a filosofia do absurdo. Produzi uma resenha crítica relacionando as escolhas narrativas às reflexões sobre o comportamento humano e as convenções sociais.">
+            </div>
+            <div class="activity-content">
+                <div class="activity-header">
+                    <h3>O Estrangeiro</h3>
+                    <span class="skill-badge">H22 <span class="dot">&bull;</span> C5</span>
+                </div>
+                <div class="activity-block">
+                    <h4>Como resolvi:</h4>
+                    <p>A partir da leitura de O Estrangeiro, de Albert Camus, examinei a construção do protagonista Meursault e sua relação com a filosofia do absurdo. Para aprofundar a interpretação da obra, produzi uma resenha crítica que relacionou as escolhas narrativas e linguísticas do autor às reflexões sobre o comportamento humano, as convenções sociais e a busca pelo sentido da existência.</p>
+                </div>
+                <div class="activity-block">
+                    <h4>O que absorvi:</h4>
+                    <p>A leitura de O Estrangeiro ampliou minha percepção sobre como a literatura pode questionar valores e comportamentos sociais. A trajetória de Meursault também me levou a refletir sobre o julgamento alheio, a indiferença e as diferentes formas de interpretar a existência.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="humanas" class="section-container">
+        <h2>Ciências Humanas e Sociais Aplicadas</h2>
+        <p class="section-desc">Autoritarismo, democracia e direitos individuais</p>
+        
+        <div class="activity-card">
+            <div class="activity-img-container">
+                <img src="https://memorialdademocracia.com.br/publico/image/6778" style="cursor: pointer;" onclick="abrirModalMidia(this)" data-titulo="Regime Militar no Brasil (H17, C9)" data-area="Ciências Humanas e Sociais Aplicadas" data-desc="Investiguei o contexto histórico do Regime Militar no Brasil (1964–1985), analisando os Atos Institucionais, especialmente o AI-5, a censura, a repressão política e as formas de resistência da sociedade.">
+            </div>
+            <div class="activity-content">
+                <div class="activity-header">
+                    <h3>Regime Militar no Brasil</h3>
+                    <span class="skill-badge">H17 <span class="dot">&bull;</span> C9</span>
+                </div>
+                <div class="activity-block">
+                    <h4>Como resolvi:</h4>
+                    <p>Investiguei o contexto histórico do Regime Militar no Brasil (1964–1985), buscando por acontecimentos que marcaram esse período. Analisei os Atos Institucionais, especialmente o AI-5, a censura, a repressão política e as diferentes formas de resistência da sociedade. A atividade permitiu compreender como o regime se consolidou e quais foram suas consequências para a população brasileira.</p>
+                </div>
+                <div class="activity-block">
+                    <h4>O que absorvi:</h4>
+                    <p>O estudo desse período ampliou minha visão sobre os impactos do autoritarismo e da restrição das liberdades individuais no Brasil. A atividade também reforçou minha convicção de que a democracia, o respeito às instituições e os direitos fundamentais devem ser preservados, independentemente das posições políticas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="natureza" class="section-container">
+        <h2>Ciências da Natureza e suas Tecnologias</h2>
+        <p class="section-desc">Biotecnologia, inovação científica e ética</p>
+        
+        <div class="activity-card">
+            <div class="activity-img-container">
+                <img src="ciencias.png" style="cursor: pointer;" onclick="abrirModalMidia(this)" data-titulo="Biotecnologia (H11, C3)" data-area="Ciências da Natureza" data-desc="Aprofundei meus conhecimentos sobre biotecnologia, explorando como os conhecimentos da biologia são aplicados na criação de tecnologias e soluções, abordando engenharia genética e impactos éticos.">
+            </div>
+            <div class="activity-content">
+                <div class="activity-header">
+                    <h3>Biotecnologia</h3>
+                    <span class="skill-badge">H11 <span class="dot">&bull;</span> C3</span>
+                </div>
+                <div class="activity-block">
+                    <h4>Como resolvi:</h4>
+                    <p>Aprofundei meus conhecimentos sobre biotecnologia, explorando como os conhecimentos da biologia são aplicados na criação de tecnologias e soluções para diferentes áreas da sociedade. Durante o estudo, abordei temas como engenharia genética, organismos geneticamente modificados e avanços na medicina, analisando seus benefícios, riscos e implicações éticas.</p>
+                </div>
+                <div class="activity-block">
+                    <h4>O que absorvi:</h4>
+                    <p>Descobri como os avanços da biotecnologia podem transformar áreas como a medicina e a agricultura. Ao mesmo tempo, o estudo despertou uma visão mais crítica sobre os desafios éticos e a responsabilidade envolvida na manipulação genética.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="matematica" class="section-container">
+        <h2>Matemática e suas Tecnologias</h2>
+        <p class="section-desc">Matrizes, operações e raciocínio lógico</p>
+        
+        <div class="activity-card">
+            <div class="activity-img-container">
+                <img src="mat.png" style="cursor: pointer;" onclick="abrirModalMidia(this)" data-titulo="Matrizes (H27, C2)" data-area="Matemática" data-desc="Explorei os conceitos fundamentais das matrizes, estudando sua organização em linhas e colunas, além de operações como adição, subtração, multiplicação e suas aplicações práticas.">
+            </div>
+            <div class="activity-content">
+                <div class="activity-header">
+                    <h3>Matrizes</h3>
+                    <span class="skill-badge">H27 <span class="dot">&bull;</span> C2</span>
+                </div>
+                
+                <div class="activity-block">
+                    <h4>Como resolvi:</h4>
+                    <p>Explorei os conceitos fundamentais das matrizes, estudando sua organização em linhas e colunas e as operações matemáticas que podem ser realizadas entre elas. Durante a resolução dos exercícios, trabalhei com adição, subtração e multiplicação de matrizes, além de explorar suas aplicações na organização de informações e na resolução de problemas matemáticos.</p>
+                </div>
+                <div class="activity-block">
+                    <h4>O que absorvi:</h4>
+                    <p>O contato com as matrizes mostrou novas possibilidades de organizar e relacionar informações numéricas. A resolução dos exercícios também contribuiu para aprimorar meu raciocínio lógico, minha precisão nos cálculos e minha capacidade de interpretar problemas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="referencias" class="section-container">
+        <h2>Referências</h2>
+        <p class="section-desc">Fontes bibliográficas, materiais didáticos e recursos digitais que contribuíram para a realização das atividades e a construção deste portfólio.</p>
+        
+        <ul style="list-style-type: disc; padding-left: 20px; color: var(--text-muted); line-height: 1.8; font-size: 1.05rem; max-width: 900px;">
+            <li style="margin-bottom: 12px;"><strong>CAMUS, Albert.</strong> <em>O Estrangeiro.</em> Obra literária analisada na área de Linguagens.</li>
+            <li style="margin-bottom: 12px;"><strong>SESI GOIANA.</strong> Materiais didáticos e atividades pedagógicas. Ensino Médio, 2026.</li>
+            <li style="margin-bottom: 12px;"><strong>BRASIL.</strong> Ato Institucional nº 5, de 13 de dezembro de 1968. Presidência da República. Disponível em: <a href="https://www.planalto.gov.br/ccivil_03/ait/ait-05-68.htm" target="_blank" style="color: var(--text-color); text-decoration: underline;">planalto.gov.br</a>.</li>
+            <li style="margin-bottom: 12px;"><strong>CIÊNCIAS DA NATUREZA.</strong> Biotecnologia e suas aplicações. Conteúdos e materiais de estudo utilizados nas atividades escolares, 2026.</li>
+            <li style="margin-bottom: 12px;"><strong>MATEMÁTICA.</strong> Matrizes e operações matriciais. Conteúdos e exercícios trabalhados durante o ano letivo, 2026.</li>
+            <li style="margin-bottom: 12px;"><strong>MOZILLA DEVELOPER NETWORK.</strong> Documentação de desenvolvimento web. Disponível em: <a href="https://developer.mozilla.org/pt-BR/" target="_blank" style="color: var(--text-color); text-decoration: underline;">developer.mozilla.org</a>.</li>
+            <li style="margin-bottom: 12px;"><strong>RODRIGUES DA SILVA FILHO, Silon.</strong> Portfólio escolar e projetos pessoais. GitHub, 2026. Disponível em: <a href="https://github.com/silonfilho" target="_blank" style="color: var(--text-color); text-decoration: underline;">github.com/silonfilho</a>.</li>
+        </ul>
+    </section>
+
+    <section id="conclusao" class="section-container">
+        <h2>Conclusão</h2>
+        <div class="conclusion-grid">
+            <div class="conclusion-text">
+                <p class="section-desc" style="font-size: 1.1rem; line-height: 1.8; color: var(--text-color); font-style: italic; text-align: justify; text-justify: inter-word; margin-bottom: 20px;">
+                    A elaboração deste portfólio marca o último trabalho apresentado por mim no Ensino Médio. Daqui, só quero me lembrar das coisas boas: os amigos, os professores, os momentos vividos e, principalmente, as lições que aprendi. Pude compreender que tudo precisa de um fim, mas isso não significa que seja algo ruim. Finais felizes existem, e estou tendo o privilégio de presenciar um.
+                </p>
+                <p style="font-weight: bold; color: var(--text-color); font-size: 1.05rem;">
+                    Silon Filho, SESI Goiana (2026)
+                </p>
+            </div>
+
+            <div class="instagram-carousel">
+                <button class="carousel-btn prev" onclick="mudarSlide(-1)">&#10094;</button>
+                <div class="carousel-track-container">
+                    <div class="carousel-track" id="carouselTrack">
+                        <!-- Slide 1: triorec -->
+                        <div class="carousel-slide">
+                            <img src="triorec.jpeg" alt="triorec" onclick="abrirModalMidia(this)" data-titulo="Momentos com Amigos" data-desc="Registros descontraídos e memórias marcantes da vivência escolar.">
+                        </div>
+                        <!-- Slide 2: triosenai -->
+                        <div class="carousel-slide">
+                            <img src="triosenai.png" alt="triosenai" onclick="abrirModalMidia(this)" data-titulo="Vivências Escolares" data-desc="Companheirismo e descontração nos corredores e salas de aula.">
+                        </div>
+                        <!-- Slide 3: triosesc -->
+                        <div class="carousel-slide">
+                            <img src="triosesc.png" alt="triosesc" onclick="abrirModalMidia(this)" data-titulo="Turma e Professores" data-desc="A energia e a união da turma que marcaram esta reta final do Ensino Médio.">
+                        </div>
+                        <!-- Slide 4: valter -->
+                        <div class="carousel-slide">
+                            <img src="valter.jpeg" alt="valter" onclick="abrirModalMidia(this)" data-titulo="Despedida e Conquistas" data-desc="Celebrando o encerramento de um ciclo inesquecível de aprendizados e amizades.">
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-btn next" onclick="mudarSlide(1)">&#10095;</button>
+
+                <div class="carousel-pagination" id="carouselPagination">
+                    <span class="pagination-dot active" onclick="irParaSlide(0)"></span>
+                    <span class="pagination-dot" onclick="irParaSlide(1)"></span>
+                    <span class="pagination-dot" onclick="irParaSlide(2)"></span>
+                    <span class="pagination-dot" onclick="irParaSlide(3)"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Silon Filho &bull; SESI Goiana</p>
+    </footer>
+
+    <div id="activity-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="fecharModal()">&times;</button>
+            <div class="modal-media" id="modal-media-container"></div>
+            <div class="modal-info">
+                <div style="flex: 1; overflow-y: auto; font-size: 0.95rem; display: flex; flex-direction: column; justify-content: center;">
+                    <p style="margin: 0;">
+                        <strong style="display: block; font-size: 1.2rem; margin-bottom: 10px; color: var(--text-color);" id="modal-title-text">Título</strong>
+                        <span id="modal-desc" style="line-height: 1.6; color: var(--text-muted);">Descrição...</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const themeIcon = document.getElementById('theme-icon');
+
+            if (currentTheme === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                themeIcon.innerHTML = '<circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+            }
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error("Erro ao ativar tela cheia:", err);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            const fullscreenIcon = document.getElementById('fullscreen-icon');
+            if (document.fullscreenElement) {
+                fullscreenIcon.innerHTML = '<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>';
+            } else {
+                fullscreenIcon.innerHTML = '<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>';
+            }
+        });
+
+        function abrirModalMidia(elemento) {
+            const titulo = elemento.getAttribute('data-titulo') || 'Atividade';
+            const desc = elemento.getAttribute('data-desc') || '';
+            const src = elemento.src || elemento.getAttribute('src');
+
+            const mediaContainer = document.getElementById('modal-media-container');
+            mediaContainer.innerHTML = `<img src="${src}" alt="Foto da Conclusão">`;
+
+            document.getElementById('modal-title-text').innerText = titulo;
+            document.getElementById('modal-desc').innerText = desc;
+            
+            document.getElementById('activity-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharModal() {
+            const modal = document.getElementById('activity-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('activity-modal').addEventListener('click', function(e) {
+            if (e.target === this) fecharModal();
+        });
+
+        /* --- CONTROLE DO CARROSSEL DE FOTOS --- */
+        let slideAtual = 0;
+        const totalSlides = 4;
+
+        function atualizarCarrossel() {
+            const track = document.getElementById('carouselTrack');
+            const dots = document.querySelectorAll('.pagination-dot');
+            
+            track.style.transform = `translateX(-${slideAtual * 25}%)`; /* CORRIGIDO: O deslocamento correto por slide em um track de 400% é 25% */
+            
+            dots.forEach((dot, index) => {
+                if (index === slideAtual) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function mudarSlide(direcao) {
+            slideAtual += direcao;
+            if (slideAtual < 0) {
+                slideAtual = totalSlides - 1;
+            } else if (slideAtual >= totalSlides) {
+                slideAtual = 0;
+            }
+            atualizarCarrossel();
+        }
+
+        function irParaSlide(indice) {
+            slideAtual = indice;
+            atualizarCarrossel();
+        }
+    </script>
+</body>
+</html>
